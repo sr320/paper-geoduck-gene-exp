@@ -17,9 +17,18 @@ test2 <- read_csv("../output/upset-test.csv")
 
 
 
+
+
 ```{r}
 head(test2)
 ```
+
+```{r}
+str(test2)
+```
+
+
+
 
 ## sample data
 
@@ -30,6 +39,9 @@ movies <- read.csv( system.file("extdata", "movies.csv", package = "UpSetR"), he
 
 ```{r}
 head(movies)
+```
+```{r}
+str(movies)
 ```
 
 
