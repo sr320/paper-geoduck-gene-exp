@@ -1,0 +1,67 @@
+---
+title: "02-upset"
+output: md_document
+date: "2023-03-05"
+---
+
+
+```{r}
+library(UpSetR)
+library(tidyverse)
+```
+
+
+```{r}
+test2 <- read_csv("../output/upset-test.csv")
+```
+
+
+
+```{r}
+head(test2)
+```
+
+## sample data
+
+```{r}
+movies <- read.csv( system.file("extdata", "movies.csv", package = "UpSetR"), header=T, sep=";" )
+
+```
+
+```{r}
+head(movies)
+```
+
+
+```{r}
+upset(movies, sets = c("Action", "Adventure", "Comedy", "Drama", "Mystery", 
+    "Thriller", "Romance", "War", "Western"), mb.ratio = c(0.55, 0.45), order.by = "freq")
+```
+
+## my data
+
+
+```
+upset(test2, sets = c("h", "l", "g"), mb.ratio = c(0.55, 0.45), order.by = "freq")
+```
+error
+
+```
+Error in start_col:end_col : argument of length 0
+7.
+`[.tbl_df`(data, , start_col:end_col)
+6.
+NextMethod(`[`)
+5.
+`[.spec_tbl_df`(data, , start_col:end_col)
+4.
+data[, start_col:end_col]
+3.
+as.data.frame(data[, start_col:end_col])
+2.
+Remove(data, first.col, last.col, Set_names)
+1.
+upset(test2, sets = c("h", "l", "g"), mb.ratio = c(0.55, 0.45),
+order.by = "freq")
+```
+

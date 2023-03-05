@@ -1,0 +1,74 @@
+---
+title: "manuscript"
+format: html
+editor: visual
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+
+## Introduction
+
+The are x genes in genome
+
+```{r schemat, echo = FALSE, out.width = "70%", fig.align = "center"}
+
+knitr::include_graphics("img/genome.png")
+```
+
+
+```{r}
+gtab <- read_delim("data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab", col_names = FALSE)
+```
+
+gene_ID: Gene ID from our Panopea generosa (Pacific geoduck) genome.
+
+SPIDs: Semicolon-delimited list of SPIDs from UniProt. One SPID in this list is a match corresponding to the our original BLAST annotations.
+
+UniProt_gene_ID: Gene accession from UniProt.
+
+gene: Abbreviated gene name from UniProt.
+
+gene_description: Human-readable gene description from UniProt.
+
+alternate_gene_description: Human-readable alternate gene description from UniProt.
+
+GO_IDs: Semicolon-delimited GO IDs from UniProt.
+
+Notebook:
+
+https://robertslab.github.io/sams-notebook/2022/04/19/Data-Wrangling-Create-Primary-P.generosa-Genome-Annotation-File.html
+
+Jupyter Notebook:
+
+https://nbviewer.org/github/RobertsLab/code/blob/master/notebooks/sam/20220419-pgen-gene_annotation_mapping.ipynb
+
+
+```{r}
+head(gtab)
+```
+
+
+more details on annotation
+https://github.com/RobertsLab/resources/issues/1411#issuecomment-1086398348
+
+
+
+
+
+## Expression
+
+
+```{r}
+tissue <- read_delim("data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
+```
+```{r}
+top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE)
+```
+
+
+## Methods

@@ -1,0 +1,75 @@
+---
+title: "01-sc-join"
+output: md_document
+date: "2023-03-04"
+---
+
+```{r}
+library(tidyverse)
+```
+'
+
+```{r}
+topwide <- top %>% 
+select(gene_id, cell_group, specificity) %>%
+pivot_wider(names_from = cell_group, values_from = specificity)
+```
+
+
+
+
+```{r}
+exp <- left_join(tissue, topwide)
+```
+
+```{r}
+test %>% mutate(h= ifelse(heart > 0, TRUE, ifelse(heart == 0, FALSE, NA))) %>%
+mutate(l= ifelse(larvae > 0, TRUE, ifelse(larvae == 0, FALSE, NA))) %>%
+mutate(g= ifelse(gonad > 0, TRUE, ifelse(gonad == 0, FALSE, NA)))
+```
+
+```{r}
+test2 <- test %>% mutate(h= ifelse(heart > 0, TRUE, ifelse(heart == 0, FALSE, NA))) %>%
+mutate(l= ifelse(larvae > 0, TRUE, ifelse(larvae == 0, FALSE, NA))) %>%
+mutate(g= ifelse(gonad > 0, TRUE, ifelse(gonad == 0, FALSE, NA))) %>%
+select(h,l,g)
+```
+
+```{r}
+install.packages("UpSetR")
+library(UpSetR)
+```
+```{r}
+upset(fromExpression(tissue), 
+      nintersects = 40, 
+      nsets = 6, 
+      order.by = "freq", 
+      decreasing = T, 
+      mb.ratio = c(0.6, 0.4),
+      number.angles = 0, 
+      text.scale = 1.1, 
+      point.size = 2.8, 
+      line.size = 1
+      )
+```
+```{r}
+install.packages("mltools") 
+install.packages("data.table")
+#one-hot encode
+library(mltools)
+library(data.table)
+newdata <- one_hot(as.data.table(tissue))
+```
+```{r}
+test <- tissue %>% 
+  select(gene_id, heart, larvae, gonad)
+
+
+```
+
+
+```{r}
+movies <- read.csv( system.file("extdata", "movies.csv", package = "UpSetR"), header=TRUE, sep=";" )
+require(ggplot2); require(plyr); require(gridExtra); require(grid);
+
+```
