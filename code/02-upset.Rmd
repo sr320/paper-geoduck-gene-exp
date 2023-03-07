@@ -169,6 +169,12 @@ order.by = "freq", empty.intersections = "on")
 
 
 ```{r}
+exp2 %>% filter(j > 0, h < 1, l < 1, g < 1, c < 1)
+```
+
+
+
+```{r}
 upset(exp2, mb.ratio = c(0.55, 0.45), order.by = "freq")
 ```
 
