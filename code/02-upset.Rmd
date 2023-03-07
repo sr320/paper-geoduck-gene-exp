@@ -162,3 +162,18 @@ str(exp2)
 upset(exp2)
 ```
 
+```{r}
+upset(exp2, sets.bar.color = "#56B4E9",
+order.by = "freq", empty.intersections = "on")
+```
+
+
+```{r}
+upset(exp2, mb.ratio = c(0.55, 0.45), order.by = "freq")
+```
+
+```{r}
+upset(exp2, nintersects = 70, group.by = "sets", cutoff = 7)
+```
+
+
