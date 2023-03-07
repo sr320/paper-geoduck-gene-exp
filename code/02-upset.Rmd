@@ -53,27 +53,112 @@ upset(movies, sets = c("Action", "Adventure", "Comedy", "Drama", "Mystery",
 ## my data
 
 
-```
-upset(test2, sets = c("h", "l", "g"), mb.ratio = c(0.55, 0.45), order.by = "freq")
-```
-error
+ Read in data.
+hemo <- read.csv("../project-crab/data/20180522-all-crabs-hemo.csv", stringsAsFactors = FALSE)
+ Convert column to numeric
+hemo$tube_number <- as.integer(hemo$tube_number)
+
+ Test that as.numeric conversion worked
+is.numeric(hemo$tube_number)
+
+```{r}
+test2 <- read_csv("../output/upset-test.csv",
+  show_col_types = should_show_types(),
+  skip_empty_rows = TRUE,
+   name_repair = "unique",
+  na = c("", "NA"),
+col_types = cols(
+  gene_id = col_character(),
+  h = col_integer(),
+  l = col_integer(),
+  g = col_integer()
+  ))
 
 ```
-Error in start_col:end_col : argument of length 0
-7.
-`[.tbl_df`(data, , start_col:end_col)
-6.
-NextMethod(`[`)
-5.
-`[.spec_tbl_df`(data, , start_col:end_col)
-4.
-data[, start_col:end_col]
-3.
-as.data.frame(data[, start_col:end_col])
-2.
-Remove(data, first.col, last.col, Set_names)
-1.
-upset(test2, sets = c("h", "l", "g"), mb.ratio = c(0.55, 0.45),
-order.by = "freq")
+
+```{r}
+test2.df <- as.data.frame(test2)
+```
+
+
+```{r}
+
+str(test2.df)
+
+```
+```{r}
+head(test2)
+```
+
+
+
+```{r}
+upset(test2.df, sets = c("h", "l", "g"))
+```
+
+
+
+# Real File 
+
+
+```{r}
+tissue <- read_delim("../data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
+```
+```{r}
+top <- read_delim("../data/geoduck_topmarkers_annot.txt", col_names = TRUE)
+```
+```{r}
+topwide <- top %>% 
+select(gene_id, cell_group, specificity) %>%
+pivot_wider(names_from = cell_group, values_from = specificity)
+```
+
+
+
+
+```{r}
+exp <- left_join(tissue, topwide)
+```
+
+
+
+
+```{r}
+str(exp)
+```
+
+```{r}
+exp.df <- as.data.frame(exp)
+```
+
+
+```{r}
+str(exp.df)
+```
+
+
+
+```{r}
+exp2 <- as.data.frame(
+  exp %>% mutate(h= ifelse(heart > 0, 1, ifelse(heart == 0, 0, NA))) %>%
+  mutate(l = ifelse(larvae > 0, 1, ifelse(larvae == 0, 0, NA))) %>%
+  mutate(g= ifelse(gonad > 0, 1, ifelse(gonad == 0, 0, NA))) %>%
+  mutate(c= ifelse(ctenidia > 0, 1, ifelse(ctenidia == 0, 0, NA))) %>%
+  mutate(j= ifelse(juvenile > 0, 1, ifelse(juvenile == 0, 0, NA))) %>%
+  mutate_at(c('h', 'l', 'g', 'c', 'j'), as.numeric)  %>%
+  select(gene_id,h,l,g,c,j)
+)
+```
+
+
+```{r}
+str(exp2)
+```
+
+
+
+
+```{r}
+upset(exp2)
 ```
 
