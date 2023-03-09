@@ -7,10 +7,12 @@ editor: visual
 ---
 
 ```{r, echo=FALSE}
+#| include = FALSE
 library(tidyverse)
 ```
 
 ```{r, echo=FALSE, cache=TRUE}
+#| include = FALSE
 tissue <- read_delim("data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
 ```
 
@@ -24,40 +26,19 @@ knitr::include_graphics("img/genome.png")
 ```
 
 ```{r}
+#| include = FALSE
 gtab <- read_delim("data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab", col_names = FALSE)
 ```
 
-gene_ID: Gene ID from our Panopea generosa (Pacific geoduck) genome.
-
-SPIDs: Semicolon-delimited list of SPIDs from UniProt. One SPID in this list is a match corresponding to the our original BLAST annotations.
-
-UniProt_gene_ID: Gene accession from UniProt.
-
-gene: Abbreviated gene name from UniProt.
-
-gene_description: Human-readable gene description from UniProt.
-
-alternate_gene_description: Human-readable alternate gene description from UniProt.
-
-GO_IDs: Semicolon-delimited GO IDs from UniProt.
-
-Notebook:
-
-https://robertslab.github.io/sams-notebook/2022/04/19/Data-Wrangling-Create-Primary-P.generosa-Genome-Annotation-File.html
-
-Jupyter Notebook:
-
-https://nbviewer.org/github/RobertsLab/code/blob/master/notebooks/sam/20220419-pgen-gene_annotation_mapping.ipynb
-
 ```{r}
+#| include = FALSE
 head(gtab)
 ```
-
-more details on annotation https://github.com/RobertsLab/resources/issues/1411#issuecomment-1086398348
 
 ## Expression
 
 ```{r}
+#| include = FALSE
 top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE)
 ```
 
@@ -66,9 +47,6 @@ top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE)
 ## Results
 
 Of the 34,947 genes, `r count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae == 0))` were not expressed in any tissues. `r count(tissue %>% filter(ctenidia > 0, gonad > 0, heart > 0, juvenile > 0, larvae > 0))` genes were detected in all five tissues types. Table
-
-
-
 
 ```{r}
 #| include = FALSE
@@ -85,16 +63,23 @@ count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile > 0, lar
 count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae > 0))
 ```
 
+| Sample   | Unique Genes | Col3 |
+|----------|--------------|------|
+| ctenidia | 340          |      |
+| gonad    | 119          |      |
+| heart    | 371          |      |
+| juvenile | 2180         |      |
+| larvae   | 868          |      |
 
-| Sample | Unique Genes | Col3 |
-|------|------|------|
-| ctenidia     | 340     |      |
-| gonad    |  119    |      |
-| heart     | 371     |      |
-| juvenile     |  2180    |      |
-| larvae    |  868    |      |
+```{r}
+#| include = FALSE
+sc_num <- read_delim("data/rowData_df_genes_by_numcells_expressed", col_names = TRUE)
+```
 
+In addition to looking at expression profiles in tissue and whole organims (juvenile and larvae) single-cell sequencing was carried out developing embryo. In total `r count(sc_num %>% filter(num_cells_expressed > 0))` genes were expressed. Expressed varied as per Figure
 
-
-
-
+```{r}
+#| warning = FALSE
+ggplot(sc_num, aes(x=num_cells_expressed)) + geom_histogram(bins = 100) +
+scale_y_continuous(trans='log2')
+```

@@ -123,30 +123,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.1     ✔ purrr   1.0.1
-✔ tibble  3.1.8     ✔ dplyr   1.1.0
-✔ tidyr   1.3.0     ✔ stringr 1.5.0
-✔ readr   2.1.4     ✔ forcats 1.0.0
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-</div>
-<div class="cell" data-hash="manuscript_cache/html/unnamed-chunk-2_8b8c4bd2b00c8d6c376318dcdb1e922d">
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 34947 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (2): gene_id, gene_name
-dbl (5): ctenidia, gonad, heart, juvenile, larvae
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>The geoduck genome has 34,947 genes.</p>
@@ -159,71 +135,9 @@ dbl (5): ctenidia, gonad, heart, juvenile, larvae
 </div>
 </div>
 </div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gtab <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 14672 Columns: 7
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (6): X1, X2, X4, X5, X6, X7
-dbl (1): X3
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
-<p>gene_ID: Gene ID from our Panopea generosa (Pacific geoduck) genome.</p>
-<p>SPIDs: Semicolon-delimited list of SPIDs from UniProt. One SPID in this list is a match corresponding to the our original BLAST annotations.</p>
-<p>UniProt_gene_ID: Gene accession from UniProt.</p>
-<p>gene: Abbreviated gene name from UniProt.</p>
-<p>gene_description: Human-readable gene description from UniProt.</p>
-<p>alternate_gene_description: Human-readable alternate gene description from UniProt.</p>
-<p>GO_IDs: Semicolon-delimited GO IDs from UniProt.</p>
-<p>Notebook:</p>
-<p>https://robertslab.github.io/sams-notebook/2022/04/19/Data-Wrangling-Create-Primary-P.generosa-Genome-Annotation-File.html</p>
-<p>Jupyter Notebook:</p>
-<p>https://nbviewer.org/github/RobertsLab/code/blob/master/notebooks/sam/20220419-pgen-gene_annotation_mapping.ipynb</p>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gtab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  X1              X2                                  X3 X4    X5    X6    X7   
-  &lt;chr&gt;           &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1 PGEN_.00g000010 Q86IC9;Q552T5                   8.62e6 omt5  Prob… O-me… GO:0…
-2 PGEN_.00g000020 P04177                          2.51e4 Th    Tyro… Tyro… GO:0…
-3 PGEN_.00g000050 Q8L840;O04092;Q9FT71            8.38e5 RECQ… ATP-… SGS1… GO:0…
-4 PGEN_.00g000060 Q61043;A0A1Y7VJL5;B2RQ73;B7ZMZ… 1.81e4 Nin   Nine… SGS1… GO:0…
-5 PGEN_.00g000080 A1E2V0                          4.89e5 BIRC3 Bacu… RING… GO:0…
-6 PGEN_.00g000090 P34456                          1.86e5 &lt;NA&gt;  Unch… RING… GO:0…</code></pre>
-</div>
-</div>
-<p>more details on annotation https://github.com/RobertsLab/resources/issues/1411#issuecomment-1086398348</p>
 </section>
 <section id="expression" class="level2">
 <h2 class="anchored" data-anchor-id="expression">Expression</h2>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>top <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/geoduck_topmarkers_annot.txt"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 141 Columns: 13
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (3): gene_id, LOC, gene_ID
-dbl (9): cell_group, marker_score, mean_expression, fraction_expressing, spe...
-lgl (1): gene_short_name
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -267,6 +181,17 @@ lgl (1): gene_short_name
 </tr>
 </tbody>
 </table>
+<p>In addition to looking at expression profiles in tissue and whole organims (juvenile and larvae) single-cell sequencing was carried out developing embryo. In total 23377 genes were expressed. Expressed varied as per Figure</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sc_num, <span class="fu">aes</span>(<span class="at">x=</span>num_cells_expressed)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="st">'log2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="manuscript_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 
 </main>
