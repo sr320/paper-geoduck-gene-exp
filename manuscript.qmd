@@ -1,25 +1,27 @@
 ---
 title: "manuscript"
-format: html
+format: 
+  html:
+    code-fold: true
 editor: visual
 ---
 
-
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
 ```
 
-
+```{r, echo=FALSE, cache=TRUE}
+tissue <- read_delim("data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
+```
 
 ## Introduction
 
-The are x genes in genome
+The geoduck genome has 34,947 genes.
 
 ```{r schemat, echo = FALSE, out.width = "70%", fig.align = "center"}
 
 knitr::include_graphics("img/genome.png")
 ```
-
 
 ```{r}
 gtab <- read_delim("data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab", col_names = FALSE)
@@ -47,28 +49,52 @@ Jupyter Notebook:
 
 https://nbviewer.org/github/RobertsLab/code/blob/master/notebooks/sam/20220419-pgen-gene_annotation_mapping.ipynb
 
-
 ```{r}
 head(gtab)
 ```
 
-
-more details on annotation
-https://github.com/RobertsLab/resources/issues/1411#issuecomment-1086398348
-
-
-
-
+more details on annotation https://github.com/RobertsLab/resources/issues/1411#issuecomment-1086398348
 
 ## Expression
 
-
-```{r}
-tissue <- read_delim("data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
-```
 ```{r}
 top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE)
 ```
 
-
 ## Methods
+
+## Results
+
+Of the 34,947 genes, `r count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae == 0))` were not expressed in any tissues. `r count(tissue %>% filter(ctenidia > 0, gonad > 0, heart > 0, juvenile > 0, larvae > 0))` genes were detected in all five tissues types. Table
+
+
+
+
+```{r}
+#| include = FALSE
+
+
+count(tissue %>% filter(ctenidia > 0, gonad == 0, heart == 0, juvenile == 0, larvae == 0))
+
+count(tissue %>% filter(ctenidia == 0, gonad > 0, heart == 0, juvenile == 0, larvae == 0))
+
+count(tissue %>% filter(ctenidia == 0, gonad == 0, heart > 0, juvenile == 0, larvae == 0))
+
+count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile > 0, larvae == 0))
+
+count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae > 0))
+```
+
+
+| Sample | Unique Genes | Col3 |
+|------|------|------|
+| ctenidia     | 340     |      |
+| gonad    |  119    |      |
+| heart     | 371     |      |
+| juvenile     |  2180    |      |
+| larvae    |  868    |      |
+
+
+
+
+

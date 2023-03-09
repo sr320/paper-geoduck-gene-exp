@@ -29,11 +29,17 @@ mutate(g= ifelse(gonad > 0, TRUE, ifelse(gonad == 0, FALSE, NA)))
 ```
 
 ```{r}
-test2 <- test %>% mutate(h= ifelse(heart > 0, TRUE, ifelse(heart == 0, FALSE, NA))) %>%
-mutate(l= ifelse(larvae > 0, TRUE, ifelse(larvae == 0, FALSE, NA))) %>%
-mutate(g= ifelse(gonad > 0, TRUE, ifelse(gonad == 0, FALSE, NA))) %>%
-select(h,l,g)
+test2 <- test %>% mutate(h= ifelse(heart > 0, 1, ifelse(heart == 0, 0, NA))) %>%
+mutate(l = ifelse(larvae > 0, 1, ifelse(larvae == 0, 0, NA))) %>%
+mutate(g= ifelse(gonad > 0, 1, ifelse(gonad == 0, 0, NA))) %>%
+mutate_at(c('h', 'l', 'g'), as.numeric)  %>%
+select(gene_id,h,l,g)
 ```
+
+```{r}
+write_delim(test2, "../output/upset-test.csv", delim = ',')
+```
+
 
 ```{r}
 install.packages("UpSetR")

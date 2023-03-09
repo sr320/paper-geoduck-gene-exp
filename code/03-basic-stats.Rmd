@@ -1,0 +1,35 @@
+---
+title: "03-basic-stats"
+output: md_document
+date: "2023-03-09"
+---
+
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+tissue <- read_delim("../data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
+```
+
+```{r}
+head(tissue)
+```
+
+
+
+
+exp2 %>% filter(j > 0, h < 1, l < 1, g < 1, c < 1)
+
+
+
+count(tissue %>% filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae == 0))
+
+
+```{r}
+count(tissue %>%
+  filter(ctenidia == 0, gonad == 0, heart == 0, juvenile == 0, larvae == 0))
+```
+
