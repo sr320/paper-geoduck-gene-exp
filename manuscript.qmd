@@ -39,8 +39,18 @@ head(gtab)
 
 ```{r}
 #| include = FALSE
-top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE)
+top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE, na = "NA")
 ```
+
+
+```{r}
+#| include = FALSE
+topwide <- top %>% 
+select(gene_id, cell_group, specificity, gene_ID) %>%
+pivot_wider(names_from = cell_group, values_from = specificity)
+
+```
+
 
 ## Methods
 
@@ -82,4 +92,25 @@ In addition to looking at expression profiles in tissue and whole organims (juve
 #| warning = FALSE
 ggplot(sc_num, aes(x=num_cells_expressed)) + geom_histogram(bins = 100) +
 scale_y_continuous(trans='log2')
+```
+
+As part of the single cell sequencing effort 14 distinct cell populations were identified with associated "top marker genes".
+
+
+```{r}
+
+topwide <- 
+read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE) %>% 
+select(gene_id, cell_group, specificity, gene_ID) %>%
+pivot_wider(names_from = cell_group, values_from = specificity) %>%
+rename_with(~paste0("cellgroup_",.), -c("gene_id", "gene_ID"))
+
+```
+
+```{r}
+knitr::kable(
+topwide %>% filter(cellgroup_1 > 0) %>%
+  select(gene_ID, cellgroup_1)
+
+)
 ```

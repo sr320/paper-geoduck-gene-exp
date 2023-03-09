@@ -189,7 +189,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="st">'log2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="manuscript_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="manuscript_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As part of the single cell sequencing effort 14 distinct cell populations were identified with associated “top marker genes”.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>topwide <span class="ot">&lt;-</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_delim</span>(<span class="st">"data/geoduck_topmarkers_annot.txt"</span>, <span class="at">col_names =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(gene_id, cell_group, specificity, gene_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pivot_wider</span>(<span class="at">names_from =</span> cell_group, <span class="at">values_from =</span> specificity) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rename_with</span>(<span class="sc">~</span><span class="fu">paste0</span>(<span class="st">"cellgroup_"</span>,.), <span class="sc">-</span><span class="fu">c</span>(<span class="st">"gene_id"</span>, <span class="st">"gene_ID"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 141 Columns: 13
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: "\t"
+chr (3): gene_id, LOC, gene_ID
+dbl (9): cell_group, marker_score, mean_expression, fraction_expressing, spe...
+lgl (1): gene_short_name
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>topwide <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cellgroup_1 <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gene_ID, cellgroup_1)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">gene_ID</th>
+<th style="text-align: right;">cellgroup_1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">uncharacterized LOC117681592</td>
+<td style="text-align: right;">0.4047914</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tubulin alpha-1A chain</td>
+<td style="text-align: right;">0.2587528</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tubulin beta chain</td>
+<td style="text-align: right;">0.3095665</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">forkhead box protein J1-B</td>
+<td style="text-align: right;">0.2861806</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">zinc finger protein castor homolog 1</td>
+<td style="text-align: right;">0.2620092</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E3 ubiquitin-protein ligase RBBP6</td>
+<td style="text-align: right;">0.2875365</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dynein beta chain, ciliary</td>
+<td style="text-align: right;">0.2655331</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dynein intermediate chain 3, ciliary</td>
+<td style="text-align: right;">0.2515826</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">kinesin-like protein KIF28P</td>
+<td style="text-align: right;">0.2610961</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dynein intermediate chain 2, ciliary</td>
+<td style="text-align: right;">0.2465039</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
