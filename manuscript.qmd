@@ -100,7 +100,12 @@ scale_y_continuous(trans='log2')
 As part of the single cell sequencing effort 14 distinct cell populations were identified with associated "top marker genes".
 
 
-```{r}
+```{r, message=FALSE}
+
+#| echo=FALSE
+#| warning=FALSE
+#| message=FALSE
+#| include=FALSE
 
 topwide <- 
 read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE) %>% 
@@ -110,13 +115,7 @@ rename_with(~paste0("cellgroup_",.), -c("gene_id", "gene_ID"))
 
 ```
 
-```{r}
-knitr::kable(
-topwide %>% filter(cellgroup_1 > 0) %>%
-  select(gene_ID, cellgroup_1)
 
-)
-```
 
 
 
@@ -130,7 +129,8 @@ kbl(
   filter(cellgroup_1 >0) %>%
   select(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) 
   , escape = F, digits=0, caption= "Cell Group 1 Top Markers") %>%
-  kable_paper("striped", full_width = F)
+  kable_paper("striped", full_width = F)  %>%
+  row_spec(1, bold = T, color = "white", background = "#D7261E")
 ```
 ```{r}
 #| warning = FALSE
@@ -140,7 +140,8 @@ kbl(
   filter(cellgroup_2 >0) %>%
   select(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) 
   ,escape = F, digits=0, caption= "Cell Group 2 Top Markers") %>%
-  kable_paper("striped", full_width = F)
+  kable_paper("striped", full_width = F) %>%
+  row_spec(1, bold = T, color = "white", background = "#D7261E")
 ```
 
 ```{r}
@@ -162,7 +163,8 @@ kbl(
   filter(cellgroup_4 >0) %>%
   select(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) 
   ,escape = F, digits=0, caption= "Cell Group 4 Top Markers") %>%
-  kable_paper("striped", full_width = F)
+  kable_paper("striped", full_width = F) %>%
+  row_spec(5, bold = T, color = "white", background = "#D7261E")
 ```
 
 ```{r}
