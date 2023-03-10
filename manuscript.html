@@ -1741,7 +1741,8 @@ lgl (1): gene_short_name
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cellgroup_13 <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) </span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  ,<span class="at">escape =</span> F, <span class="at">digits=</span><span class="dv">0</span>, <span class="at">caption=</span> <span class="st">"Cell Group 13 Top Markers"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">7</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#D7261E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
@@ -1814,13 +1815,13 @@ lgl (1): gene_short_name
    <td style="text-align:right;"> 16 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> PGEN_.00g081160 </td>
-   <td style="text-align:left;"> POU domain, class 4, transcription factor 3 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:left;font-weight: bold;color: white !important;background-color: #D7261E !important;"> PGEN_.00g081160 </td>
+   <td style="text-align:left;font-weight: bold;color: white !important;background-color: #D7261E !important;"> POU domain, class 4, transcription factor 3 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 0 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 0 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 0 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 3 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> PGEN_.00g299610 </td>
