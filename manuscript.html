@@ -1069,7 +1069,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cellgroup_8 <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  ,<span class="at">escape =</span> F, <span class="at">digits=</span><span class="dv">0</span>, <span class="at">caption=</span> <span class="st">"Cell Group 8 Top Markers"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="st">"striped"</span>, <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">5</span>, <span class="at">bold =</span> T, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">background =</span> <span class="st">"#D7261E"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
@@ -1124,13 +1125,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    <td style="text-align:right;"> 0 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> PGEN_.00g026190 </td>
-   <td style="text-align:left;"> thyroid receptor-interacting protein 11 </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 22 </td>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:left;font-weight: bold;color: white !important;background-color: #D7261E !important;"> PGEN_.00g026190 </td>
+   <td style="text-align:left;font-weight: bold;color: white !important;background-color: #D7261E !important;"> thyroid receptor-interacting protein 11 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 6 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 3 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 22 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 27 </td>
+   <td style="text-align:right;font-weight: bold;color: white !important;background-color: #D7261E !important;"> 26 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> PGEN_.00g153860 </td>

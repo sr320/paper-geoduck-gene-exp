@@ -208,7 +208,8 @@ kbl(
   filter(cellgroup_8 >0) %>%
   select(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile) 
   ,escape = F, digits=0, caption= "Cell Group 8 Top Markers") %>%
-  kable_paper("striped", full_width = F)
+  kable_paper("striped", full_width = F) %>%
+  row_spec(5, bold = T, color = "white", background = "#D7261E")
 ```
 
 
