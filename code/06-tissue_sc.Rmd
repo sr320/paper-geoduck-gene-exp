@@ -7,3 +7,24 @@ date: "2023-03-09"
 What does top markers overlap with?
 
 
+```{r}
+
+topwide <- 
+read_delim("../data/geoduck_topmarkers_annot.txt", col_names = TRUE) %>% 
+select(gene_id, cell_group, specificity, gene_ID) %>%
+pivot_wider(names_from = cell_group, values_from = specificity) %>%
+rename_with(~paste0("cellgroup_",.), -c("gene_id", "gene_ID"))
+
+```
+
+
+```{r}
+sc_tissue <- left_join(topwide, tissue)
+```
+
+```{r}
+left_join(topwide, tissue) %>%
+  filter(cellgroup_1 >0) %>%
+  select(gene_id, gene_ID, ctenidia, heart, gonad, larvae, juvenile)
+```
+
