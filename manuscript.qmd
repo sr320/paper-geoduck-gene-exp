@@ -14,9 +14,29 @@ library("kableExtra")
 
 ```
 
+loading data
+
 ```{r, echo=FALSE, cache=TRUE}
 #| include = FALSE
 tissue <- read_delim("data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
+```
+
+```{r}
+#| include = FALSE
+gtab <- read_delim("data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab", col_names = FALSE)
+```
+
+```{r}
+#| include = FALSE
+top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE, na = "NA")
+```
+
+```{r}
+#| include = FALSE
+topwide <- top %>% 
+select(gene_id, cell_group, specificity, gene_ID) %>%
+pivot_wider(names_from = cell_group, values_from = specificity)
+
 ```
 
 ## Introduction

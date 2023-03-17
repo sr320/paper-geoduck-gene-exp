@@ -11,21 +11,6 @@ library(tidyverse)
 ```
 
 
-```{r}
-test2 <- read_csv("../output/upset-test.csv")
-```
-
-
-
-
-
-```{r}
-head(test2)
-```
-
-```{r}
-str(test2)
-```
 
 
 
@@ -50,63 +35,41 @@ upset(movies, sets = c("Action", "Adventure", "Comedy", "Drama", "Mystery",
     "Thriller", "Romance", "War", "Western"), mb.ratio = c(0.55, 0.45), order.by = "freq")
 ```
 
-## my data
 
 
- Read in data.
-hemo <- read.csv("../project-crab/data/20180522-all-crabs-hemo.csv", stringsAsFactors = FALSE)
- Convert column to numeric
-hemo$tube_number <- as.integer(hemo$tube_number)
-
- Test that as.numeric conversion worked
-is.numeric(hemo$tube_number)
-
-```{r}
-test2 <- read_csv("../output/upset-test.csv",
-  show_col_types = should_show_types(),
-  skip_empty_rows = TRUE,
-   name_repair = "unique",
-  na = c("", "NA"),
-col_types = cols(
-  gene_id = col_character(),
-  h = col_integer(),
-  l = col_integer(),
-  g = col_integer()
-  ))
-
-```
-
-```{r}
-test2.df <- as.data.frame(test2)
-```
-
-
-```{r}
-
-str(test2.df)
-
-```
-```{r}
-head(test2)
-```
-
-
-
-```{r}
-upset(test2.df, sets = c("h", "l", "g"))
-```
 
 
 
 # Real File 
 
 
-```{r}
+
+
+```{r, echo=FALSE, cache=TRUE}
+#| include = FALSE
 tissue <- read_delim("../data/salmon.merged.gene_tpm.tsv", col_names = TRUE)
 ```
+
 ```{r}
-top <- read_delim("../data/geoduck_topmarkers_annot.txt", col_names = TRUE)
+#| include = FALSE
+gtab <- read_delim("../data/20220419-pgen-gene-accessions-gene_id-gene_name-gene_description-alt_gene_description-go_ids.tab", col_names = FALSE)
 ```
+
+```{r}
+#| include = FALSE
+top <- read_delim("../data/geoduck_topmarkers_annot.txt", col_names = TRUE, na = "NA")
+```
+
+```{r}
+#| include = FALSE
+topwide <- top %>% 
+select(gene_id, cell_group, specificity, gene_ID) %>%
+pivot_wider(names_from = cell_group, values_from = specificity)
+
+```
+
+
+
 ```{r}
 topwide <- top %>% 
 select(gene_id, cell_group, specificity) %>%
@@ -119,23 +82,6 @@ pivot_wider(names_from = cell_group, values_from = specificity)
 ```{r}
 exp <- left_join(tissue, topwide)
 ```
-
-
-
-
-```{r}
-str(exp)
-```
-
-```{r}
-exp.df <- as.data.frame(exp)
-```
-
-
-```{r}
-str(exp.df)
-```
-
 
 
 ```{r}
@@ -152,15 +98,21 @@ exp2 <- as.data.frame(
 
 
 ```{r}
-str(exp2)
+upset(exp2)
 ```
-
-
 
 
 ```{r}
-upset(exp2)
+exp2 %>% filter(j > 0 & l > 0 & h == 0 & g == 0 & c ==0)
 ```
+
+```{r}
+exp2 %>% filter(j > 0 & l > 0 & h > 0 & g > 0 & c > 0)
+```
+
+
+
+
 
 ```{r}
 upset(exp2, sets.bar.color = "#56B4E9",
@@ -178,8 +130,8 @@ exp2 %>% filter(j > 0, h < 1, l < 1, g < 1, c < 1)
 upset(exp2, mb.ratio = c(0.55, 0.45), order.by = "freq")
 ```
 
-```{r}
-upset(exp2, nintersects = 70, group.by = "sets", cutoff = 7)
+```{r ups}
+upset(exp2, nintersects = 70, group.by = "sets", cutoff = 7, queries = list(list(query = intersects, params = list("j", "l"), color = "orange", active = T)))
 ```
 
 
