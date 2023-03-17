@@ -3,3 +3,8 @@ title: "05-sc-data"
 output: html_document
 date: "2023-03-09"
 ---
+
+```{r}
+sc_num <- read_delim("../data/rowData_df_genes_by_numcells_expressed", col_names = TRUE)
+```
+

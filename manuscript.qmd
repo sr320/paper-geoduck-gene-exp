@@ -45,7 +45,6 @@ head(gtab)
 top <- read_delim("data/geoduck_topmarkers_annot.txt", col_names = TRUE, na = "NA")
 ```
 
-
 ```{r}
 #| include = FALSE
 topwide <- top %>% 
@@ -53,7 +52,6 @@ select(gene_id, cell_group, specificity, gene_ID) %>%
 pivot_wider(names_from = cell_group, values_from = specificity)
 
 ```
-
 
 ## Methods
 
@@ -99,7 +97,6 @@ scale_y_continuous(trans='log2')
 
 As part of the single cell sequencing effort 14 distinct cell populations were identified with associated "top marker genes".
 
-
 ```{r, message=FALSE}
 
 #| echo=FALSE
@@ -115,12 +112,6 @@ rename_with(~paste0("cellgroup_",.), -c("gene_id", "gene_ID"))
 
 ```
 
-
-
-
-
-
-
 ```{r}
 #| warning = FALSE
 
@@ -132,6 +123,7 @@ kbl(
   kable_paper("striped", full_width = F)  %>%
   row_spec(1, bold = T, color = "white", background = "#D7261E")
 ```
+
 ```{r}
 #| warning = FALSE
 
@@ -212,7 +204,6 @@ kbl(
   row_spec(5, bold = T, color = "white", background = "#D7261E")
 ```
 
-
 ```{r}
 #| warning = FALSE
 
@@ -223,7 +214,6 @@ kbl(
   ,escape = F, digits=0, caption= "Cell Group 9 Top Markers") %>%
   kable_paper("striped", full_width = F)
 ```
-
 
 ```{r}
 #| warning = FALSE
@@ -236,7 +226,6 @@ kbl(
   kable_paper("striped", full_width = F)
 ```
 
-
 ```{r}
 #| warning = FALSE
 
@@ -248,7 +237,6 @@ kbl(
   kable_paper("striped", full_width = F)
 ```
 
-
 ```{r}
 #| warning = FALSE
 
@@ -259,7 +247,6 @@ kbl(
   ,escape = F, digits=0, caption= "Cell Group 12 Top Markers") %>%
   kable_paper("striped", full_width = F)
 ```
-
 
 ```{r}
 #| warning = FALSE
@@ -273,7 +260,6 @@ kbl(
   row_spec(7, bold = T, color = "white", background = "#D7261E")
 ```
 
-
 ```{r}
 #| warning = FALSE
 
@@ -284,5 +270,3 @@ kbl(
   ,escape = F, digits=0, caption= "Cell Group 14 Top Markers") %>%
   kable_paper("striped", full_width = F)
 ```
-
-
